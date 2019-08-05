@@ -3,11 +3,11 @@ import datetime
 from airflow import DAG
 from airflow.models import Variable
 
-from airflow.operators.udacity_plugin import (
+from airflow.operators.adrien_plugin import (
+    CreateTripsRedshiftOperator,
     FactsCalculatorOperator,
     HasRowsOperator,
-    S3ToRedshiftOperator,
-    CreateTripsRedshiftOperator
+    S3ToRedshiftOperator
 )
 
 dag_config = Variable.get("bikeshare_configs", deserialize_json=True)

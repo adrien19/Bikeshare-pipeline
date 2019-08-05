@@ -3,13 +3,13 @@ from airflow.plugins_manager import AirflowPlugin
 import operators
 
 # Defining the plugin class
-class UdacityPlugin(AirflowPlugin):
-    name = "udacity_plugin"
+class AdrienPlugin(AirflowPlugin):
+    name = "adrien_plugin"
     operators = [
+        operators.CreateTripsRedshiftOperator,
         operators.FactsCalculatorOperator,
         operators.HasRowsOperator,
-        operators.S3ToRedshiftOperator,
-        operators.CreateTripsRedshiftOperator
+        operators.S3ToRedshiftOperator
     ]
     hooks = []
     # A list of class(es) derived from BaseExecutor
