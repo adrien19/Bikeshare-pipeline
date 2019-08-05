@@ -6,7 +6,8 @@ from airflow.models import Variable
 from airflow.operators.udacity_plugin import (
     FactsCalculatorOperator,
     HasRowsOperator,
-    S3ToRedshiftOperator
+    S3ToRedshiftOperator,
+    CreateTripsRedshiftOperator
 )
 
 dag_config = Variable.get("bikeshare_configs", deserialize_json=True)
@@ -25,10 +26,21 @@ s3_key = dag_config["s3_key"]
 dag = DAG("bikeshare.bikeshareDag", start_date=datetime.datetime.utcnow())
 
 
+
+
+#
+# Creates trips table in redshit database
+#
+
+create_trips_table_Redshift_task = CreateTripsRedshiftOperator(
+    task_id = 'create_trips_table_Redshift',
+    dag = dag,
+    redshift_conn_id = "redshift",
+)
+
 #
 # Load trips data from S3 to RedShift. Use the s3_key
-#       "data-pipelines/divvy/unpartitioned/divvy_trips_2018.csv"
-#       and the s3_bucket "udacity-dend"
+#       and the s3_bucket
 #
 copy_trips_task = S3ToRedshiftOperator(
     task_id = 'copy_trips_from_s3_to_redshift',
@@ -65,7 +77,9 @@ calculate_facts = FactsCalculatorOperator(
 )
 
 #
-# Define task ordering for the DAG tasks you defined
+# Define task ordering for the DAG tasks defined
 #
+
+create_trips_table_Redshift_task >> copy_trips_task
 copy_trips_task >> check_trips
 check_trips >> calculate_facts
