@@ -29,7 +29,7 @@ class FactsCalculatorOperator(BaseOperator):
 
         super(FactsCalculatorOperator, self).__init__(*args, **kwargs)
         #
-        # TODO: Set attributes from __init__ instantiation arguments
+        # Sets attributes from __init__ instantiation arguments
         #
         self.redshift_conn_id = redshift_conn_id,
         self.origin_table = origin_table,
@@ -44,9 +44,9 @@ class FactsCalculatorOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
 
         #
-        # TODO: Format the `facts_sql_template` and run the query against redshift
+        # Formatting the `facts_sql_template` and run the query against redshift
         #
-        facts_sql = FactsCalcuatorOperator.facts_sql_template.format(
+        facts_sql = FactsCalculatorOperator.facts_sql_template.format(
             origin_table = self.origin_table,
             destination_table = self.destination_table,
             fact_column = self.fact_column,

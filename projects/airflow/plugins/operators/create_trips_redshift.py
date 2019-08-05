@@ -33,6 +33,7 @@ class CreateTripsRedshiftOperator(BaseOperator):
 
     def execute(self, context):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
+        create_trips_sql = CreateTripsRedshiftOperator.create_trips_sql
 
         self.log.info("Creating trips destination table in Redshift")
         redshift.run(create_trips_sql)
