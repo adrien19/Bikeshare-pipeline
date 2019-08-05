@@ -24,10 +24,9 @@ services:
       - EXECUTOR=Local
       - FERNET_KEY=jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
     volumes:
-      - ./projects/bikeshare/dags:/usr/local/airflow/dags
+      - ./projects/airflow/dags:/usr/local/airflow/dags
+      - ./projects/airflow/plugins:/user/local/airflow/plugins
 
-      # Uncomment to include custom plugins
-      # - ./plugins:/usr/local/airflow/plugins
     ports:
       - "8080:8080"
     command: webserver
